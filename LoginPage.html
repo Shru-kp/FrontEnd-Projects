@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Cloud Project Login</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: "Orbitron", sans-serif; /* Futuristic font */
+      background: radial-gradient(circle at top, #0f2027, #203a43, #2c5364);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+    }
+
+    .login-container {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 50px 40px;
+      border-radius: 16px;
+      box-shadow: 0 0 25px rgba(0,255,255,0.25);
+      width: 360px;
+      text-align: center;
+      backdrop-filter: blur(12px);
+    }
+
+    .login-container h2 {
+      margin-bottom: 25px;
+      color: #00ffff;
+      text-shadow: 0 0 12px #00ffff;
+      font-weight: 600;
+      letter-spacing: 2px;
+    }
+
+    .input-field {
+      width: 325px;
+      padding: 14px;
+      margin: 12px 0;
+      border: 1px solid rgba(0,255,255,0.3);
+      border-radius: 6px;
+      font-size: 15px;
+      background: rgba(255,255,255,0.08);
+      color: #fff;
+      transition: all 0.3s ease;
+    }
+
+    /* Subtle cyber hover/focus effect */
+    .input-field:hover {
+      border-color: #00ffff;
+      box-shadow: 0 0 10px #00ffff;
+    }
+
+    .input-field:focus {
+      outline: none;
+      border-color: #00cccc;
+      box-shadow: 0 0 12px #00cccc;
+      background: rgba(0,255,255,0.1);
+    }
+
+    .btn {
+      width: 360px;
+      padding: 14px;
+      margin-top: 15px;
+      background: linear-gradient(90deg, #00ffff, #00cccc);
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      font-weight: bold;
+      color: #000;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      letter-spacing: 1px;
+    }
+    .btn:hover {
+      background: linear-gradient(90deg, #00cccc, #00ffff);
+      box-shadow: 0 0 15px #00ffff;
+      transform: translateY(-2px);
+    }
+    .error {
+      color: #ff4d4d;
+      font-size: 13px;
+      margin-top: 12px;
+    }
+    body {
+  margin: 0;
+  padding: 0;
+  font-family: "Orbitron", sans-serif;
+  background: radial-gradient(circle at top, #0f2027, #203a43, #2c5364);
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  position: relative; 
+  overflow: hidden;
+}
+
+/* Neon grid overlay */
+body::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(#00ffff33 1px, transparent 1px),
+    linear-gradient(90deg, #00ffff33 1px, transparent 1px);
+  background-size: 40px 40px;
+  opacity: 0;
+  transition: opacity 0.5s ease, filter 0.5s ease;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Glow effect */
+body:hover::before {
+  opacity: 1;
+  filter: drop-shadow(0 0 6px #00ffff);
+}
+
+/* Disable glow when hovering  */
+.login-container:hover ~ body::before {
+  opacity: 0 !important;
+}
+.password-wrapper {
+  position: relative;
+  width: 260px; 
+  margin-right: 60px;
+  margin-left: 3px;
+}
+
+.password-wrapper .input-field {
+  width: 280px;
+  padding-right: 58px;
+}
+
+.eye-icon {
+  position: absolute;
+  left: 300px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #00ffff;
+  text-shadow: 0 0 6px #00ffff;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.eye-icon:hover {
+  color: #00cccc;
+  text-shadow: 0 0 10px #00cccc;
+}
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <h2>Log-in☁️</h2>
+    <form id="loginForm">
+      <input type="text" id="username" class="input-field" placeholder="Enter Username">
+       <div class="password-wrapper">
+  <input 
+    type="password" 
+    id="password" 
+    class="input-field" 
+    placeholder="Enter Password"
+  >
+  <span id="togglePassword" class="eye-icon"> 👁️</span>
+</div>
+      <button type="submit" class="btn">Login</button>
+      <div id="errorMsg" class="error"></div>
+    </form>
+  </div>
+
+  <script>
+    const form = document.getElementById("loginForm");
+    const errorMsg = document.getElementById("errorMsg");
+  form.addEventListener("submit", function(event) {
+    event.preventDefault();
+    const username = document.getElementById("username").value.trim();
+    const password = document.getElementById("password").value.trim();
+
+    // Validation rules
+    if (username === "" || password === "") {
+      errorMsg.textContent = "Both fields are required!";
+      return;
+    }
+    if (username.length < 4 || username.length > 20) {
+      errorMsg.textContent = "Username must be 4–10 characters.";
+      return;
+    }
+    if (!/^[a-zA-Z0-9_]+$/.test(username)) {
+      errorMsg.textContent = "Username can only contain letters, numbers, and underscores.";
+      return;
+    }
+    if (password.length < 8 || password.length > 32) {
+      errorMsg.textContent = "Password must be 8–12 characters.";
+      return;
+    }
+    if (!/(?=.*[A-Z])/.test(password)) {
+      errorMsg.textContent = "Password must include at least one uppercase letter.";
+      return;
+    }
+    if (!/(?=.*[a-z])/.test(password)) {
+      errorMsg.textContent = "Password must include at least one lowercase letter.";
+      return;
+    }
+    if (!/(?=.*[0-9])/.test(password)) {
+      errorMsg.textContent = "Password must include at least one number.";
+      return;
+    }
+    if (!/(?=.*[@$!%*?&])/.test(password)) {
+      errorMsg.textContent = "Password must include at least one special character (@$!%*?&).";
+      return;
+    }
+
+    // If all checks pass, allow success
+    errorMsg.textContent = "";
+    alert("Logged in successfully!");
+  });
+  const togglePassword = document.getElementById("togglePassword");
+const passwordField = document.getElementById("password");
+
+togglePassword.addEventListener("click", () => {
+  const type = passwordField.getAttribute("type") === "password" ? "text" : "password";
+  passwordField.setAttribute("type", type);
+
+  // Switch icon for feedback
+  togglePassword.textContent = type === "password" ? "👁️" : "🙈";
+});
+  </script>
+</body>
+</html>
